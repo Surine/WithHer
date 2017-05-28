@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">零件</string>
+    <string name="normal">如今一个人听歌，\n
+        总是会觉得失落</string>
+    <string name="normal2">幻听你在我的耳边，\n
+        轻轻诉说。</string>
+    <string name="info">这是一个简单的的桌面小部件，提供了桌面美化的功能，
+    经过上个版本后，我将气泡头像进行重新修正，测试了几款主流机型，基本满足正常使用，
+    注意：如果话比较长是需要调整小部件长宽比的，这点特点在MIUI等桌面不能很好使用，此外如果你遇到困难
+    可以联系我</string>
+</resources>

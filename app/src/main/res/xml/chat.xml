@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+   <PreferenceCategory
+       android:title="小部件选项"
+       >
+       <Preference
+           android:icon="@drawable/boy"
+           android:key="boy_head"
+           android:title="男孩子头像"
+           />
+
+       <Preference
+           android:icon="@drawable/girl"
+           android:key="girl_head"
+           android:title="女孩子头像"
+           />
+       <EditTextPreference
+           android:key="boy_say"
+           android:title="男孩子说的话"
+           android:summary=""
+           />
+       <EditTextPreference
+           android:key="girl_say"
+           android:title="女孩子说的话"
+           android:summary=""
+           />
+       <Preference
+           android:title="更多配置"
+           android:key="more"
+           />
+       <Preference
+           android:title="使用说明"
+           android:key="create"
+           />
+   </PreferenceCategory>
+
+</PreferenceScreen>

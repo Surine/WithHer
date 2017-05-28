@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.surine.withher">
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name="com.surine.withher.Activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="com.surine.withher.Activity.InfoActivity">
+        </activity>
+
+
+
+
+        <!--是继承于的AppWidgetProvider类，用来响应widget的添加、删除、更新等操作。-->
+        <receiver
+            android:name="com.surine.withher.Provider.ChatProvider"
+            android:label="@string/app_name"
+           >
+            <intent-filter>
+                <!--必须要显示声明的action！因为所有的widget的广播都是通过它来发送的；要接收widget的添加、删除等广播，就必须包含它。-->
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <!--为了接收服务所发送的更新图片的广播。-->
+                <action android:name="com.surine.WithHer.MyProvider.MY_UPDATA_CHANGE"/>
+            </intent-filter>
+            <!--指定了 AppWidgetProviderInfo 对应的资源文件-->
+            <!--指定metadata名，通过android.appwidget.provider来辨别data。-->
+            <!--指定 AppWidgetProviderInfo 对应的资源路径。即，xml/example_appwidget_info.xml。-->
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/chatwidget"/>
+        </receiver>
+
+    </application>
+
+</manifest>

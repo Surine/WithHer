@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minHeight="100dp"
+    android:minWidth="320dp"
+    android:updatePeriodMillis="86400000"
+    android:previewImage="@mipmap/ic_launcher"
+    android:widgetCategory="home_screen|keyguard|searchbox"
+    android:initialLayout="@layout/widget_chat_layout"
+    >
+    <!--
+    android:updatePeriodMillis 更新widget的时间间隔(ms)。在实际测试中，发现设置android:updatePeriodMillis的值为5秒时，不管用！跟踪android源代码，发现：
+    当android:updatePeriodMillis的值小于30分钟时，会被设置为30分钟。也就意味着，即使将它的值设为5秒，实际上也是30分钟之后才更新。因此，我们若向动态的更新widget的某组件，最好通过service、AlarmManager、Timer等方式；本文采用的是service。
+     android:previewImage，用于指定预览图片。即搜索到widget时，查看到的图片。若没有设置的话，系统为指定一张默认图片。
+     android:minWidth : 最小宽度
+     android:minHeight ： 最小高度
+     android:initialLayout ： 加载到桌面时对应的布局文件
+     android:resizeMode ： widget可以被拉伸的方向。horizontal表示可以水平拉伸，vertical表示可以竖直拉伸
+     android:widgetCategory ： widget可以被显示的位置。home_screen表示可以将widget添加到桌面，keyguard表示widget可以被添加到锁屏界面。
+     android:initialKeyguardLayout ： 加载到锁屏界面时对应的布局文件
+        -->
+
+</appwidget-provider>
