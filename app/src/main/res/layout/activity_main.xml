@@ -17,7 +17,7 @@
         android:layout_alignParentTop="true"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        />
+        tools:ignore="RtlCompat"/>
 
     <FrameLayout
         android:layout_width="match_parent"

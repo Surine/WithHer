@@ -3,6 +3,7 @@ package com.surine.withher.kotlin_io_util
 import android.app.Fragment
 import android.content.Context
 import android.graphics.*
+import android.preference.PreferenceManager
 import java.io.*
 
 
@@ -12,6 +13,7 @@ import java.io.*
  */
 fun Fragment.save_image(filename: String, oldbitMap: Bitmap) {
     //the method to save the choose iamge
+
     var bitMap:Bitmap = isCircle(oldbitMap)
     var fOut: FileOutputStream? = null
     val f = File(activity.getFilesDir(),filename)
@@ -28,7 +30,10 @@ fun Fragment.save_image(filename: String, oldbitMap: Bitmap) {
     }
 }
 
-fun  isCircle(oldbitMap: Bitmap): Bitmap {
+fun  Fragment.isCircle(oldbitMap: Bitmap): Bitmap {
+    val prefs = PreferenceManager
+            .getDefaultSharedPreferences(activity)
+
     var length = if (oldbitMap.getWidth() < oldbitMap.getHeight()) oldbitMap.getWidth() else oldbitMap.getHeight()
     val paint = Paint()
     paint.setAntiAlias(true)
@@ -37,7 +42,12 @@ fun  isCircle(oldbitMap: Bitmap): Bitmap {
     canvas.drawCircle((length / 2).toFloat(), (length / 2).toFloat(), (length / 2).toFloat(), paint)
     paint.setXfermode(PorterDuffXfermode(PorterDuff.Mode.SRC_IN))
     canvas.drawBitmap(oldbitMap,0.0f,0.0f,paint)
-    return target
+    if(!prefs.getBoolean("cut",false)){
+        return target
+    }else{
+        return oldbitMap
+    }
+
 }
 
 

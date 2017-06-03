@@ -6,13 +6,16 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.RemoteViews
-import com.surine.withher.Activity.InfoActivity
+import com.surine.withher.Activity.MainActivity
 import com.surine.withher.R
 import com.surine.withher.kotlin_io_util.my_getBitmap
+import com.surine.withher.kotlin_ui.toast
+
 
 /**
  * Created by surine on 2017/5/24.
@@ -20,9 +23,28 @@ import com.surine.withher.kotlin_io_util.my_getBitmap
 
 class ChatProvider : AppWidgetProvider() {
 
-    // onUpdate() 在更新 widget 时，被执行，
+    // onUpdate()
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
+
+        //get the  appwidgetids size
+        val N = appWidgetIds.size;
+        // Perform this loop procedure for each App Widget that belongs to this provider
+        for (i in 0..N - 1) {
+            val appWidgetId = appWidgetIds[i]
+
+            // Create an Intent to launch ExampleActivity
+            val intent = Intent(context, MainActivity::class.java)
+            val pendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+
+            // Get the layout for the App Widget and attach an on-click listener
+            // to the layout
+            val views = RemoteViews(context.packageName, R.layout.widget_chat_layout)
+            views.setOnClickPendingIntent(R.id.right_head, pendingIntent)
+
+            // Tell the AppWidgetManager to perform an update on the current app widget
+            appWidgetManager.updateAppWidget(appWidgetId, views)
+        }
     }
 
 
@@ -56,14 +78,22 @@ class ChatProvider : AppWidgetProvider() {
         super.onReceive(context, intent)
         val remoteViews = RemoteViews(context.packageName, R.layout.widget_chat_layout)
         val manager = AppWidgetManager.getInstance(context)
-        val my_intent = Intent(context,
-                InfoActivity::class.java)
-        val pendingintent = PendingIntent
-                .getActivity(context, 0, my_intent, 0)
-        remoteViews.setOnClickPendingIntent(R.id.layout,
-                pendingintent)
         val prefs = PreferenceManager
                 .getDefaultSharedPreferences(context)
+
+//        val drawable = GradientDrawable()
+//        drawable.cornerRadius = 5f
+//        drawable.setStroke(1, Color.parseColor("#cccccc"))
+//        drawable.setColor(Color.parseColor("#eeeeee"))
+
+        try {
+            remoteViews.setInt(R.id.left_msg,"setBackgroundColor", Color.parseColor(prefs.getString("left_color","#50000000")));
+            remoteViews.setInt(R.id.right_msg,"setBackgroundColor", Color.parseColor(prefs.getString("right_color","#50000000")));
+            remoteViews.setTextColor(R.id.left_msg,Color.parseColor(prefs.getString("left_text_color","#50000000")));
+            remoteViews.setTextColor(R.id.right_msg,Color.parseColor(prefs.getString("right_text_color","#50000000")));
+        } catch(e: Exception) {
+            toast(context,"颜色代码错误！")
+        }
         remoteViews.setImageViewBitmap(R.id.left_head, my_getBitmap(context,"boy.jpeg"))
         remoteViews.setImageViewBitmap(R.id.right_head,my_getBitmap(context,"girl.jpeg"))
         remoteViews.setTextViewText(R.id.left_msg, prefs.getString("boy_say", context.getString(R.string.normal)))

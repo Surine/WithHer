@@ -1,6 +1,5 @@
 package com.surine.withher.Fragment
 
-import android.app.Activity.RESULT_CANCELED
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Bitmap
@@ -29,11 +28,15 @@ class ChatInfoFragment : PreferenceFragment(), Preference.OnPreferenceClickListe
     private var boy_say: EditTextPreference? = null
     private var girl_say: EditTextPreference? = null
     private var create: Preference? = null
-    private var more: Preference? = null
+    private var cut: Preference? = null
+    private var left_color: EditTextPreference? = null
+    private var left_text_color: EditTextPreference? = null
+    private var right_color: EditTextPreference? = null
+    private var right_text_color: EditTextPreference? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(R.xml.chat)
-        activity.title = "情侣聊天小部件"
+        activity.title = getString(R.string.chat)
         findview()   //initview
         setLinsener()   //setlinstener
     }
@@ -43,7 +46,7 @@ class ChatInfoFragment : PreferenceFragment(), Preference.OnPreferenceClickListe
         girl_head!!.onPreferenceClickListener = this
         boy_say!!.onPreferenceClickListener = this
         girl_say!!.onPreferenceClickListener = this
-        more!!.onPreferenceClickListener = this
+        cut!!.onPreferenceClickListener = this
         create!!.onPreferenceClickListener = this
     }
 
@@ -52,7 +55,11 @@ class ChatInfoFragment : PreferenceFragment(), Preference.OnPreferenceClickListe
         girl_head = findPreference("girl_head")
         boy_say = findPreference("boy_say") as EditTextPreference
         girl_say = findPreference("girl_say") as EditTextPreference
-        more = findPreference("more")
+        left_color = findPreference("left_color") as EditTextPreference
+        left_text_color = findPreference("left_text_color") as EditTextPreference
+        right_color = findPreference("right_color") as EditTextPreference
+        right_text_color = findPreference("right_text_color") as EditTextPreference
+        cut = findPreference("cut")
         create = findPreference("create")
         val prefs = PreferenceManager
                 .getDefaultSharedPreferences(activity)
@@ -71,9 +78,7 @@ class ChatInfoFragment : PreferenceFragment(), Preference.OnPreferenceClickListe
             choose_picture(1)
         } else if (preference === girl_head) {
             choose_picture(0)
-        } else if (preference === more) {
-            toast("暂时没有更多")
-        } else if (preference === create) {
+        }else if (preference === create) {
             dialog(getString(R.string.info),"使用说明")
         }
 
@@ -83,9 +88,12 @@ class ChatInfoFragment : PreferenceFragment(), Preference.OnPreferenceClickListe
 
 
     private fun choose_picture(i: Int) {
-         val intent = Intent(Intent.ACTION_PICK)
-        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
-        startActivityForResult(intent, i)
+        try {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
+            startActivityForResult(intent, i)
+        } catch(e: Exception) {
+        }
     }
 
 
@@ -107,6 +115,14 @@ class ChatInfoFragment : PreferenceFragment(), Preference.OnPreferenceClickListe
             test("boy_say", sharedPreferences)
         } else if (s == "girl_say") {
             test("girl_say", sharedPreferences)
+        } else if(s == "left_color"){
+            sendBorad()
+        }else if(s == "right_color"){
+            sendBorad()
+        }else if(s == "left_text_color"){
+            sendBorad()
+        }else if(s == "right_text_color"){
+            sendBorad()
         }
     }
 
@@ -134,16 +150,30 @@ class ChatInfoFragment : PreferenceFragment(), Preference.OnPreferenceClickListe
 
 
     //onactivityresult
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-        if(resultCode != RESULT_CANCELED) {
-            when (requestCode) {
-                1 -> HandLeImage(data!!, 1)   //show the  picture
-                0 -> HandLeImage(data!!, 0)   //show the  picture
-                3 -> save(GetBitMap(data!!), 3) //get bitmap and save
-                2 -> save(GetBitMap(data!!), 2) //get bitmap and save
+
+    //so happy to fix a bug (due to the back click……,if we click the back we will get a null data
+    // and because i use the kotlin develop the app,the null is unsafed,so can cause the error)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        try {
+            if (requestCode == 1) {
+                HandLeImage(data, 1)   //show the  picture
+            } else if (requestCode == 0) {
+                HandLeImage(data, 0)   //show the  picture
+            } else if (requestCode == 3) {
+                save(GetBitMap(data), 3) //get bitmap and save
+            } else if (requestCode == 2) {
+                save(GetBitMap(data), 2) //get bitmap and save
+            } else{
+                toast("error")
             }
+        } catch(e: Exception) {
+
         }
     }
+
+
+
+
 
     private fun save(getBitMap: Bitmap, i: Int){
         var filename: String? = null
@@ -181,11 +211,12 @@ class ChatInfoFragment : PreferenceFragment(), Preference.OnPreferenceClickListe
 
     private fun HandLeImage(data: Intent?, i: Int) {
         // 从相册返回的数据
-        if (data != null) {
             // get uri
-            val uri = data.data
+        try {
+            val uri = data?.data
             //crop method
-            cropPic(uri,i)
+            cropPic(uri!!,i)
+        } catch(e: Exception) {
         }
 
     }

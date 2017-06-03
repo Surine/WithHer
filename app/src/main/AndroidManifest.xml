@@ -37,7 +37,8 @@
             <!--指定 AppWidgetProviderInfo 对应的资源路径。即，xml/example_appwidget_info.xml。-->
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/chatwidget"/>
+                android:resource="@xml/chatwidget"
+                />
         </receiver>
 
     </application>

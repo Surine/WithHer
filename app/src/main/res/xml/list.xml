@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
   <PreferenceCategory
-      android:title="与她"
+      android:title="零件"
       >
       <Preference
           android:key="chatWidget"
-          android:title="情侣聊天小部件"
-          android:summary="体验一下使用小部件达到情侣壁纸的效果"
+          android:title="对话"
+          android:summary="这是一个模拟对话的小部件"
           />
 
   </PreferenceCategory>
     <PreferenceCategory
-        android:title="其他？"
+        android:title="其他"
         >
       <Preference
           android:key="about"

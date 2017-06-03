@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Fragment
 import android.content.Intent
 import android.net.Uri
+import com.surine.withher.R
 
 /**
  * Created by surine on 2017/5/28.
@@ -23,9 +24,7 @@ fun Fragment.listdialog(items: Array<CharSequence>, title: String) {
         if(i==1){
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://github.com/surine/")))
         }else if(i == 0){
-            dialog("经过第一版本的反馈，本版本已经修改了气泡，头像和一些奇怪的bug" +
-                    "也兼容到了Android4.0，全部代码转换成Kotlin语言开发，如果在使用中" +
-                    "遇到了什么问题请反馈给我。","关于")
+            dialog(getString(R.string.about),"关于")
         }
     }.show()
 

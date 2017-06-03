@@ -6,28 +6,50 @@
        <Preference
            android:icon="@drawable/boy"
            android:key="boy_head"
-           android:title="男孩子头像"
+           android:title="左头像"
            />
 
        <Preference
            android:icon="@drawable/girl"
            android:key="girl_head"
-           android:title="女孩子头像"
+           android:title="右头像"
            />
        <EditTextPreference
            android:key="boy_say"
-           android:title="男孩子说的话"
+           android:title="左文字"
            android:summary=""
            />
        <EditTextPreference
            android:key="girl_say"
-           android:title="女孩子说的话"
+           android:title="右文字"
            android:summary=""
            />
-       <Preference
-           android:title="更多配置"
-           android:key="more"
+       <EditTextPreference
+           android:title="左气泡颜色"
+           android:key="left_color"
+           android:summary="设置气泡颜色(颜色代码如#00000000，数字前两位是透明度范围00-99,后六位是实际颜色值，必须正确填写九位值或者除透明度以外的七位值)"
            />
+       <EditTextPreference
+           android:title="右气泡颜色"
+           android:key="right_color"
+           android:summary="设置气泡颜色"
+           />
+       <EditTextPreference
+           android:title="左文字颜色"
+           android:key="left_text_color"
+           android:summary="设置文字颜色"
+           />
+       <EditTextPreference
+           android:title="右文字颜色"
+           android:key="right_text_color"
+           android:summary="设置文字颜色"
+           />
+       <SwitchPreference
+           android:title="取消头像裁剪"
+           android:summary="开启后，头像将不会裁剪为圆形"
+           android:key="cut"
+           />
+
        <Preference
            android:title="使用说明"
            android:key="create"
